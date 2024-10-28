@@ -1,4 +1,3 @@
-// ignore_for_file: avoid_print
 
 import 'package:crud/pages/update_student_page.dart';
 import 'package:flutter/material.dart';
