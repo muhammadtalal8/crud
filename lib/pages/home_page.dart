@@ -1,3 +1,5 @@
+// ignore_for_file: sort_child_properties_last
+
 import 'package:crud/pages/add_student_page.dart';
 import 'package:crud/pages/list_student_page.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +27,6 @@ class _HomePageState extends State<HomePage> {
                     MaterialPageRoute(
                         builder: (context) => const AddStudentPage()))
               },
-              // ignore: sort_child_properties_last
               child: const Text(
                 'Add',
                 style: TextStyle(fontSize: 20.0),

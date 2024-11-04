@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, avoid_unnecessary_containers
+// ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
 
@@ -111,39 +111,38 @@ class _AddStudentPageState extends State<AddStudentPage> {
                   },
                 ),
               ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ElevatedButton(
-                        onPressed: () {
-                          if (_formkey.currentState!.validate()) {
-                            setState(() {
-                              name = nameController.text;
-                              email = emailController.text;
-                              password = passwordController.text;
-                              addUser();
-                              clearText();
-                            });
-                          }
-                        },
-                        child: const Text(
-                          "Register",
-                          style: TextStyle(fontSize: 18.0),
-                        )),
-                    ElevatedButton(
-                      onPressed: () => {clearText()},
-                      // ignore: sort_child_properties_last
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        if (_formkey.currentState!.validate()) {
+                          setState(() {
+                            name = nameController.text;
+                            email = emailController.text;
+                            password = passwordController.text;
+                            addUser();
+                            clearText();
+                          });
+                        }
+                      },
                       child: const Text(
-                        'Reset',
+                        "Register",
                         style: TextStyle(fontSize: 18.0),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 121, 124, 126)),
-                    )
-                  ],
-                ),
+                      )),
+                  ElevatedButton(
+                    onPressed: () => {clearText()},
+                    // ignore: sort_child_properties_last
+                    child: const Text(
+                      'Reset',
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            const Color.fromARGB(255, 121, 124, 126)),
+                    //statesController: context,
+                  )
+                ],
               )
             ],
           ),
