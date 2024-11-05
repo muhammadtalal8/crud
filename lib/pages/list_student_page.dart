@@ -1,5 +1,8 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crud/pages/update_student_page.dart';
+// ignore: unused_import
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +37,7 @@ class _ListStudentPageState extends State<ListStudentPage> {
           snapshot.data!.docs.map((DocumentSnapshot document) {
             Map a = document.data() as Map<String, dynamic>;
             storedocs.add(a);
-          });
+          }).toList();
           return Container(
             margin:
                 const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
@@ -82,53 +85,55 @@ class _ListStudentPageState extends State<ListStudentPage> {
                       ),
                     )),
                   ]),
-                  TableRow(children: [
-                    const TableCell(
-                        child: Center(
-                      child: Text(
-                        "Talal",
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                    )),
-                    const TableCell(
-                        child: Center(
-                      child: Text(
-                        "Talal@gmail>com",
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                    )),
-                    const TableCell(
-                        child: Center(
-                      child: Text(
-                        "Talal",
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                    )),
-                    TableCell(
-                        child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                            onPressed: () => {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const UpdateStudentPage()))
-                                },
-                            icon: const Icon(
-                              Icons.edit,
-                              color: Colors.orange,
-                            )),
-                        IconButton(
-                            onPressed: () => {delete(1)},
-                            icon: const Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                            ))
-                      ],
-                    ))
-                  ]),
+                  for (var i = 0; i < storedocs.length; i++) ...[
+                    TableRow(children: [
+                      TableCell(
+                          child: Center(
+                        child: Text(
+                          storedocs[i]['name'],
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                      )),
+                      TableCell(
+                          child: Center(
+                        child: Text(
+                          storedocs[i]['email'],
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                      )),
+                      const TableCell(
+                          child: Center(
+                        child: Text(
+                          "Talal",
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                      )),
+                      TableCell(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                              onPressed: () => {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const UpdateStudentPage()))
+                                  },
+                              icon: const Icon(
+                                Icons.edit,
+                                color: Colors.orange,
+                              )),
+                          IconButton(
+                              onPressed: () => {print(storedocs)},
+                              icon: const Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                              ))
+                        ],
+                      ))
+                    ]),
+                  ]
                 ],
               ),
             ),
