@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class UpdateStudentPage extends StatefulWidget {
-  const UpdateStudentPage({super.key});
+  final String id;
+  const UpdateStudentPage({super.key, required this.id});
 
   @override
   State<UpdateStudentPage> createState() => _UpdateStudentPageState();
@@ -15,13 +17,28 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, dynamic snapshot) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Update Student"),
       ),
       body: Form(
-          child: Padding(
+        key: _formkey,
+        child: FutureBuilder<DocumentSnapshot<Map<String,dynamic>>>(future: FirebaseFirestore.instance.collection('Students').doc(widget.id).get(),
+         builder: _, snapshot  {
+if(snapshot.hasError){
+  print('Something went Worng')
+}
+if(snapshot.connectionState==ConnectionState.waiting)
+{
+  return const Center(child: CircularProgressIndicator(),)
+}
+
+var data = snapshot.data!.data();
+var name = data['name'];
+var email = data['email'];
+var password = data['password'];
+      return     Padding(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
         child: ListView(
           children: [
@@ -119,7 +136,16 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
             )
           ],
         ),
-      )),
+      )
+
+      
+        },
+      
+      
+        )
+          
+        
+            ),
     );
   }
 }

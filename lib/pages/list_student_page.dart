@@ -16,8 +16,16 @@ class ListStudentPage extends StatefulWidget {
 class _ListStudentPageState extends State<ListStudentPage> {
   final Stream<QuerySnapshot> studentsStream =
       FirebaseFirestore.instance.collection('students').snapshots();
-  delete(id) {
-    print("User Deleted $id");
+  //For Deleting User
+  CollectionReference students =
+      FirebaseFirestore.instance.collection('students');
+  Future<void> deleteUser(id) {
+    // print("User Deleted $id");
+    return students
+        .doc(id)
+        .delete()
+        .then((value) => print('User Deleted'))
+        .catchError((error) => print('Failed to delete user: $error'));
   }
 
   @override
@@ -37,6 +45,7 @@ class _ListStudentPageState extends State<ListStudentPage> {
           snapshot.data!.docs.map((DocumentSnapshot document) {
             Map a = document.data() as Map<String, dynamic>;
             storedocs.add(a);
+            a['id'] = document.id;
           }).toList();
           return Container(
             margin:
@@ -91,14 +100,14 @@ class _ListStudentPageState extends State<ListStudentPage> {
                           child: Center(
                         child: Text(
                           storedocs[i]['name'],
-                          style: TextStyle(fontSize: 18.0),
+                          style: const TextStyle(fontSize: 18.0),
                         ),
                       )),
                       TableCell(
                           child: Center(
                         child: Text(
                           storedocs[i]['email'],
-                          style: TextStyle(fontSize: 18.0),
+                          style: const TextStyle(fontSize: 18.0),
                         ),
                       )),
                       const TableCell(
@@ -125,7 +134,7 @@ class _ListStudentPageState extends State<ListStudentPage> {
                                 color: Colors.orange,
                               )),
                           IconButton(
-                              onPressed: () => {print(storedocs)},
+                              onPressed: () => {deleteUser(storedocs[i]['id'])},
                               icon: const Icon(
                                 Icons.delete,
                                 color: Colors.red,
